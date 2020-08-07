@@ -1,0 +1,34 @@
+{
+  "name": "tag-test-app",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "apps/*"
+  ],
+  "dependencies": {
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
+    "wsrun": "^5.2.1"
+  },
+  "scripts": {
+    "start": "wsrun --parallel run start",
+    "test": "CI=true wsrun --parallel run test",
+    "lint": "wsrun --parallel run lint",
+    "e2e": "cypress run"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.+(js|jsx)": [
+      "yarn lint"
+    ]
+  },
+  "devDependencies": {
+    "cypress": "^4.12.1"
+  }
+}

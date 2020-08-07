@@ -1,0 +1,35 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "serverless offline start",
+    "test": "jest",
+    "lint": "eslint './src/**/*.js'",
+    "deploy:staging": "serverless deploy --stage staging",
+    "deploy:production": "serverless deploy --stage production"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "testURL": "http://localhost"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "24.9.0",
+    "prettier": "^2.0.5",
+    "serverless": "^1.78.1",
+    "serverless-offline": "^6.5.0",
+    "serverless-webpack": "^5.3.3",
+    "webpack": "^4.44.1"
+  }
+}

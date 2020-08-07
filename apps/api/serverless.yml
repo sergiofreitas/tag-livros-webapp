@@ -1,0 +1,38 @@
+service: tag-comparison-api
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+custom:
+  bucketName: tagcomparisonbucket
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    includeModules: true
+    packager: 'yarn'
+  serverless-offline:
+    httpPort: 7000
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, env:AWS_STAGE, 'dev'}
+  region: ${opt:region, env:AWS_REGION, 'eu-central-1'}
+
+functions:
+  app:
+    handler: src/server.index
+    name: ${self:provider.stage}-${self:service}-index
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+  users:
+    handler: src/server.users
+    name: ${self:provider.stage}-${self:service}-users
+    events:
+      - http:
+          path: /users
+          method: get
+          cors: true
