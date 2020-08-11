@@ -28,11 +28,11 @@ functions:
           path: /
           method: get
           cors: true
-  users:
-    handler: src/server.users
-    name: ${self:provider.stage}-${self:service}-users
+  searchByIsbn:
+    handler: src/server.searchByIsbn
+    name: ${self:provider.stage}-${self:service}-search-by-isbn
     events:
       - http:
-          path: /users
+          path: /search
           method: get
           cors: true
