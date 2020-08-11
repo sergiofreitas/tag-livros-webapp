@@ -5,10 +5,17 @@ module.exports = {
     node: true,
     jest: true
   },
+  settings: {
+    'import/resolver': {
+      'node': {
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  },
+  parser: 'babel-eslint',
   parserOptions: {
-    parser: 'babel-eslint',
-    ecmaVersion: 2018,
-    sourceType: 'module'
+    sourceType: 'module',
+    allowImportExportEverywhere: true
   },
   extends: [
     'airbnb',

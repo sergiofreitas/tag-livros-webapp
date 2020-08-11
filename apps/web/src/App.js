@@ -1,25 +1,26 @@
-import React from 'react'
-import './App.css'
+import React, { Suspense } from 'react'
+import { Switch, Route } from 'react-router-dom'
+import Providers from 'core/providers'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>the env {process.env.REACT_APP_API_URL}</p>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  )
-}
+import AppLoader from 'ui/AppLoader'
+import AppError from 'ui/AppError'
+
+const IndexPage = React.lazy(() => import('pages/index'))
+const DetailPage = React.lazy(() => import('pages/Detail'))
+const NotFound = React.lazy(() => import('pages/NotFound'))
+
+const App = () => (
+  <AppError>
+    <Suspense fallback={<AppLoader />}>
+      <Providers>
+        <Switch>
+          <Route exact path="/" component={IndexPage} />
+          <Route path="/detail/:id" component={DetailPage} />
+          <Route component={NotFound} />
+        </Switch>
+      </Providers>
+    </Suspense>
+  </AppError>
+)
 
 export default App
