@@ -1,3 +1,5 @@
+import localBooks from '../livros.json'
+
 /**
  * Get a list of books registered in local json
  *
@@ -9,5 +11,5 @@ export default async () => {
   // get all items from livros.json
   // for each item, hydrate it using the goodReads hydrate method
 
-  return []
+  return localBooks.results
 }
