@@ -1,9 +1,8 @@
-import { listBooks, getBook, searchBooks } from '../server'
-import {
-  getAllBooks,
-  getBookByIsbn,
-  searchBooksByIsbn,
-} from '../books/controller'
+import { getAllBooks, getBookByIsbn, searchBooksByIsbn } from '../controller'
+
+import getBook from '../services/get'
+import getAll from '../services/getAll'
+import search from '../services/search'
 
 const mockBooks = [
   {
@@ -48,48 +47,44 @@ const mockBooks = [
   },
 ]
 
-jest.mock('../books/controller', () => ({
-  getAllBooks: jest.fn(),
-  getBookByIsbn: jest.fn(),
-  searchBooksByIsbn: jest.fn(),
-}))
+jest.mock('../services/get', () => jest.fn())
+jest.mock('../services/getAll', () => jest.fn())
+jest.mock('../services/search', () => jest.fn())
 
 describe('get all books', () => {
-  it('when its ok, should return a list ok books', async () => {
-    getAllBooks.mockImplementation(() => {
-      return { statusCode: 200, body: JSON.stringify(mockBooks) }
-    })
+  getAll.mockImplementation(() => mockBooks)
 
-    const { statusCode, body } = await listBooks()
+  it('when its ok, should return a list of books', async () => {
+    const { statusCode, body } = await getAllBooks()
 
     expect(statusCode).toBe(200)
     expect(body).toBe(JSON.stringify(mockBooks))
   })
 
-  it('when its have an error, return a error 500 and a message', async () => {
-    getAllBooks.mockImplementation(() => {
-      return { statusCode: 500, body: 'Internal Server Error' }
+  it('when throw an error, should return the error message', async () => {
+    getAll.mockImplementation(() => {
+      throw new Error('Internal Server Error')
     })
 
-    const { statusCode, body } = await listBooks()
+    const { statusCode, body } = await getAllBooks()
 
     expect(statusCode).toBe(500)
-    expect(body).toBe('Internal Server Error')
+    expect(body).toBe(JSON.stringify({ message: 'Internal Server Error' }))
   })
 })
 
-describe('get book', () => {
-  getBookByIsbn.mockImplementation(({ pathParameters: { isbn } }) => {
+describe('get book by isbn', () => {
+  getBook.mockImplementation((isbn) => {
     const book = mockBooks.find((b) => isbn === b.isbn)
     if (!book) {
-      return { statusCode: 500, body: 'Not Found' }
+      throw new Error('Not Found')
     }
 
-    return { statusCode: 200, body: JSON.stringify(book) }
+    return book
   })
 
   it('when its ok, should return the book', async () => {
-    const { statusCode, body } = await getBook({
+    const { statusCode, body } = await getBookByIsbn({
       pathParameters: { isbn: '9788525063557' },
     })
 
@@ -98,42 +93,40 @@ describe('get book', () => {
   })
 
   it('when the book not exists, should return an error', async () => {
-    const { statusCode, body } = await getBook({
+    const { statusCode, body } = await getBookByIsbn({
       pathParameters: { isbn: 'not-exists' },
     })
 
     expect(statusCode).toBe(500)
-    expect(body).toBe('Not Found')
+    expect(body).toBe(JSON.stringify({ message: 'Not Found' }))
   })
 
-  it('when its have an error, return a error 500 and a message', async () => {
-    getBookByIsbn.mockImplementation(() => {
-      return { statusCode: 500, body: 'Internal Server Error' }
+  it('when throw an error, should return the error message', async () => {
+    getBook.mockImplementation(() => {
+      throw new Error('Internal Server Error')
     })
 
-    const { statusCode, body } = await getBook({
+    const { statusCode, body } = await getBookByIsbn({
       pathParameters: { isbn: '9788525063557' },
     })
 
     expect(statusCode).toBe(500)
-    expect(body).toBe('Internal Server Error')
+    expect(body).toBe(JSON.stringify({ message: 'Internal Server Error' }))
   })
 })
 
-describe('search for a book', () => {
-  searchBooksByIsbn.mockImplementation(
-    ({ queryStringParameters: { term } }) => {
-      const books = mockBooks.filter((b) => b.isbn.startsWith(term))
-      if (!books.length) {
-        return { statusCode: 500, body: 'Not Found' }
-      }
-
-      return { statusCode: 200, body: JSON.stringify(books) }
+describe('search book by isbn', () => {
+  search.mockImplementation((term) => {
+    const books = mockBooks.filter((b) => b.isbn.startsWith(term))
+    if (!books.length) {
+      throw new Error('Not Found')
     }
-  )
+
+    return books
+  })
 
   it('when its ok, should return the books', async () => {
-    const { statusCode, body } = await searchBooks({
+    const { statusCode, body } = await searchBooksByIsbn({
       queryStringParameters: { term: '9788525063557' },
     })
 
@@ -141,25 +134,25 @@ describe('search for a book', () => {
     expect(body).toBe(JSON.stringify([mockBooks[0]]))
   })
 
-  it('when the books not exists, should return an error', async () => {
-    const { statusCode, body } = await searchBooks({
+  it('when the book not exists, should return an error', async () => {
+    const { statusCode, body } = await searchBooksByIsbn({
       queryStringParameters: { term: 'not-exists' },
     })
 
     expect(statusCode).toBe(500)
-    expect(body).toBe('Not Found')
+    expect(body).toBe(JSON.stringify({ message: 'Not Found' }))
   })
 
-  it('when its have an error, return a error 500 and a message', async () => {
-    searchBooksByIsbn.mockImplementation(() => {
-      return { statusCode: 500, body: 'Internal Server Error' }
+  it('when throw an error, should return the error message', async () => {
+    search.mockImplementation(() => {
+      throw new Error('Internal Server Error')
     })
 
-    const { statusCode, body } = await searchBooks({
+    const { statusCode, body } = await searchBooksByIsbn({
       queryStringParameters: { term: '9788525063557' },
     })
 
     expect(statusCode).toBe(500)
-    expect(body).toBe('Internal Server Error')
+    expect(body).toBe(JSON.stringify({ message: 'Internal Server Error' }))
   })
 })

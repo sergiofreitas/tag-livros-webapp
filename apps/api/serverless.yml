@@ -2,6 +2,7 @@ service: tag-comparison-api
 
 plugins:
   - serverless-webpack
+  - serverless-dotenv-plugin
   - serverless-offline
 
 custom:
@@ -20,17 +21,29 @@ provider:
   region: ${opt:region, env:AWS_REGION, 'eu-central-1'}
 
 functions:
-  app:
-    handler: src/server.index
-    name: ${self:provider.stage}-${self:service}-index
+  books:
+    handler: src/server.listBooks
+    name: ${self:provider.stage}-${self:service}-list-books
     events:
       - http:
-          path: /
+          path: /books
           method: get
           cors: true
-  searchByIsbn:
-    handler: src/server.searchByIsbn
-    name: ${self:provider.stage}-${self:service}-search-by-isbn
+  getBook:
+    handler: src/server.getBook
+    name: ${self:provider.stage}-${self:service}-get-book
+    events:
+      - http:
+          path: /books/{isbn}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                isbn: true
+  searchBooks:
+    handler: src/server.searchBooks
+    name: ${self:provider.stage}-${self:service}-search-books
     events:
       - http:
           path: /search

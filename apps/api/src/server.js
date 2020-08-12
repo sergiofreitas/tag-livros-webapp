@@ -1,25 +1,11 @@
-export const index = async () => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      hello: 'world',
-    }),
-  }
-}
+import {
+  getAllBooks,
+  getBookByIsbn,
+  searchBooksByIsbn,
+} from './books/controller'
 
-export const searchByIsbn = async (event) => {
-  try {
+export const listBooks = () => getAllBooks()
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(event),
-    }
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: err.message,
-      }),
-    }
-  }
-}
+export const getBook = (event) => getBookByIsbn(event)
+
+export const searchBooks = (event) => searchBooksByIsbn(event)
