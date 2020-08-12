@@ -1,4 +1,6 @@
 import localBooks from '../livros.json'
+import getReviewCount from '../../goodReads/getReviewCount'
+import hydrateBooks from '../../goodReads/hydrateBooks'
 
 /**
  * Get a book using isbn field as identifier
@@ -9,13 +11,18 @@ import localBooks from '../livros.json'
  * @throws {Error}
  */
 export default async (isbn) => {
-  // get the isbn from livros.json
   const book = localBooks.results.find((item) => item.isbn === isbn)
 
-  // get the info from goodReads, using the hydrate method
-  // if the result is empty, return null
   if (!book) {
     throw new Error('Not Found')
   }
-  return book
+
+  try {
+    const reviewCount = await getReviewCount(isbn)
+    const books = hydrateBooks(reviewCount, [book])
+
+    return books[0]
+  } catch (error) {
+    return book
+  }
 }

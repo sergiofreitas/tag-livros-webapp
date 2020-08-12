@@ -13,7 +13,8 @@
   "jest": {
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
-    "testURL": "http://localhost"
+    "testURL": "http://localhost",
+    "setupFiles": ["dotenv/config"]
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -29,8 +30,14 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "serverless": "^1.78.1",
+    "serverless-dotenv-plugin": "^3.0.0",
     "serverless-offline": "^6.5.0",
     "serverless-webpack": "^5.3.3",
     "webpack": "^4.44.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "lodash": "^4.17.19",
+    "moment": "^2.27.0"
   }
 }
