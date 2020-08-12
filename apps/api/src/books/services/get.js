@@ -11,5 +11,5 @@ export default async (isbn) => {
   // get the info from goodReads, using the hydrate method
   // if the result is empty, return null
 
-  return { isbn }
+  return { isbn, bookTitle: 'the title' }
 }

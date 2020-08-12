@@ -11,5 +11,5 @@ export default async (term) => {
   // search for isbn in goodreads, and hydrate the result
   // if the result is empty, return null
 
-  return { term }
+  return [{ isbn: term }]
 }
