@@ -16,7 +16,7 @@
     "start": "wsrun --parallel run start",
     "test": "CI=true wsrun --parallel run test",
     "lint": "wsrun --parallel run lint",
-    "e2e": "cypress run"
+    "e2e": "cypress run --headed"
   },
   "husky": {
     "hooks": {
