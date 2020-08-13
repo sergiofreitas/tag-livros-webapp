@@ -16,6 +16,10 @@ yarn
 npm install
 ```
 
+# Env files
+
+O back-end e o front-end possuem .env separados. Para que funcione normalmente, é necessario copiar o .env a partir dos arquivos `.env.sample`, tanto no diretório `apps/web` como `apps/api`.
+
 ## Running
 
 ```bash
