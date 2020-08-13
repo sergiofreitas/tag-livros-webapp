@@ -29,15 +29,16 @@ const Card = ({ classes, book, to }) => (
         to={to}
         variant="subtitle2"
         color="textPrimary"
+        className={classes.name}
       >
         {book.name}
       </Link>
-      <Typography component="div" variant="caption">
+      <Typography component="div" variant="caption" className={classes.author}>
         {book.author}
       </Typography>
       <Grid container alignItems="center" className={classes.rating}>
         <Rating defaultValue={2.5} precision={0.5} readOnly size="small" />
-        <Typography variant="outline">2.5</Typography>
+        <Typography variant="overline">2.5</Typography>
       </Grid>
     </CardContent>
   </MuiCard>
@@ -62,6 +63,15 @@ const styles = theme => ({
   },
   rating: {
     marginTop: theme.spacing(1),
+  },
+  name: {
+    minHeight: 42,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  author: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 })
 

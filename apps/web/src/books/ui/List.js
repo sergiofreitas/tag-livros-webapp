@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Container, Grid, Typography, withStyles } from '@material-ui/core'
 
 import BookCard from './Card'
+import Skeleton from './CardSkeleton'
 
 const BookList = ({ classes, title, books, loading }) => (
   <Container maxWidth="md" className={classes.container}>
@@ -13,11 +14,11 @@ const BookList = ({ classes, title, books, loading }) => (
     <Grid container spacing={2}>
       {books.map(book => (
         <Grid key={book.objectId} item xs={12} sm={4} md={3}>
-          <BookCard
-            book={book}
-            to={`/detail/${book.objectId}`}
-            loading={loading}
-          />
+          {loading ? (
+            <Skeleton />
+          ) : (
+            <BookCard book={book} to={`/detail/${book.isbn}`} />
+          )}
         </Grid>
       ))}
     </Grid>
@@ -33,7 +34,15 @@ BookList.defaultProps = {
 BookList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   title: PropTypes.string,
-  books: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  books: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      author: PropTypes.string,
+      cover: PropTypes.shape({
+        url: PropTypes.string,
+      }),
+    }),
+  ),
   loading: PropTypes.bool,
 }
 

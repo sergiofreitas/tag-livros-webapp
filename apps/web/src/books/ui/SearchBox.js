@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Paper,
@@ -11,8 +11,8 @@ import {
 
 import SearchIcon from '@material-ui/icons/Search'
 
-const SearchBox = ({ classes, onSearch }) => {
-  const inputRef = useRef(null)
+const SearchBox = ({ classes, term, onSearch }) => {
+  const [value, setValue] = useState(term)
 
   return (
     <Container maxWidth="md">
@@ -21,14 +21,20 @@ const SearchBox = ({ classes, onSearch }) => {
           <Grid item xs>
             <InputBase
               fullWidth
-              inputRef={inputRef}
+              value={value}
+              onChange={evt => setValue(evt.target.value)}
+              onKeyUp={evt => {
+                if (evt.key === 'Enter') {
+                  onSearch(evt.target.value)
+                }
+              }}
               placeholder="Busque por isbn"
               classes={{ input: classes.input }}
               inputProps={{ 'aria-label': 'search' }}
             />
           </Grid>
           <Grid item>
-            <IconButton onClick={() => onSearch(inputRef.current.value)}>
+            <IconButton onClick={() => onSearch(value)}>
               <SearchIcon />
             </IconButton>
           </Grid>
@@ -38,7 +44,12 @@ const SearchBox = ({ classes, onSearch }) => {
   )
 }
 
+SearchBox.defaultProps = {
+  term: '',
+}
+
 SearchBox.propTypes = {
+  term: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   onSearch: PropTypes.func.isRequired,
 }

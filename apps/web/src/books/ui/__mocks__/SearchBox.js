@@ -1,8 +1,14 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-const SearchBox = ({ onSearch }) => {
+const SearchBox = ({ term, onSearch }) => {
   const inputRef = useRef(null)
+
+  useEffect(() => {
+    if (term && inputRef.current) {
+      inputRef.current.value = term
+    }
+  }, [term])
 
   return (
     <>
@@ -20,7 +26,12 @@ const SearchBox = ({ onSearch }) => {
   )
 }
 
+SearchBox.defaultProps = {
+  term: undefined,
+}
+
 SearchBox.propTypes = {
+  term: PropTypes.string,
   onSearch: PropTypes.func.isRequired,
 }
 

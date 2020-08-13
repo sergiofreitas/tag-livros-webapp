@@ -1,11 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Card = ({ book, to, loading }) => {
-  if (loading) {
-    return <progress value="0" max="100" />
-  }
-
+const Card = ({ book, to }) => {
   return (
     <a href={to}>
       <h4>{book.name}</h4>
@@ -23,7 +19,6 @@ Card.propTypes = {
       url: PropTypes.string,
     }),
   }).isRequired,
-  loading: PropTypes.bool.isRequired,
   to: PropTypes.string.isRequired,
 }
 

@@ -28,4 +28,14 @@ describe('when user interact with component', () => {
 
     expect(mockSearch).toHaveBeenCalledWith('123456')
   })
+
+  it('when user click on enter the onSearch must be triggered', () => {
+    const mockSearch = jest.fn()
+    render(<SearchBox onSearch={mockSearch} />)
+
+    const elem = screen.getByRole('textbox', { name: 'search' })
+    userEvent.type(elem, '123456{enter}')
+
+    expect(mockSearch).toHaveBeenCalledWith('123456')
+  })
 })
