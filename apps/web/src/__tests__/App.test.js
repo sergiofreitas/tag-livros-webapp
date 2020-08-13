@@ -10,6 +10,7 @@ jest.mock('core/providers', () => ({ children }) => (
 jest.mock('pages/index', () => () => <p>Index page</p>)
 jest.mock('pages/Detail', () => () => <p>Detail page</p>)
 jest.mock('pages/NotFound', () => () => <p>Not Found page</p>)
+jest.mock('pages/Search', () => () => <p>Search page</p>)
 
 describe('when component is mounted', () => {
   it('render the initial route', async () => {
@@ -42,6 +43,17 @@ describe('when component is mounted', () => {
     )
 
     const elem = await screen.findByText(/Not Found page/)
+    expect(elem).toBeInTheDocument()
+  })
+
+  it('render the search route', async () => {
+    render(
+      <MemoryRouter initialEntries={['/search']}>
+        <App />
+      </MemoryRouter>,
+    )
+
+    const elem = await screen.findByText(/Search page/)
     expect(elem).toBeInTheDocument()
   })
 })

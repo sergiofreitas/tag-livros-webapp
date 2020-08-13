@@ -57,4 +57,14 @@ describe('when component is mounted', () => {
     const links = await screen.findAllByRole('link')
     expect(links.length).toBe(2)
   })
+
+  it('check the loading component', async () => {
+    render(<BookList title="Book Title" books={mockBooks} loading />)
+
+    const head = screen.getByRole('heading', { name: 'Book Title' })
+    expect(head).toBeInTheDocument()
+
+    const progressbars = await screen.findAllByRole('progressbar')
+    expect(progressbars.length).toBe(2)
+  })
 })

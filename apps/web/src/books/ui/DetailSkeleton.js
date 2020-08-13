@@ -5,7 +5,7 @@ import { Skeleton } from '@material-ui/lab'
 const DetailSkeleton = () => {
   const theme = useTheme()
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" role="progressbar">
       <Paper elevation={2} style={{ padding: theme.spacing(4, 3) }}>
         <Grid container spacing={3} justify="space-between">
           <Grid item xs={12} sm={4}>

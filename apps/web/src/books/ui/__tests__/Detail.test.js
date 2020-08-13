@@ -1,7 +1,7 @@
 import React from 'react'
 import { screen, render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import Card from '../Card'
+import Detail from '../Detail'
 
 const mockBook = {
   objectId: '4MQrahe9Fk',
@@ -28,26 +28,40 @@ describe('when component is mounted', () => {
   it('check the rendered component', () => {
     render(
       <MemoryRouter>
-        <Card book={mockBook} to="/detail/9788573262711" />
+        <Detail book={mockBook} />
       </MemoryRouter>,
     )
 
-    const name = screen.getByRole('link', {
+    const name = screen.getByRole('heading', {
       name: 'Duas Narrativas Fantásticas',
     })
     expect(name).toBeInTheDocument()
 
-    const author = screen.getByText('Fiódor Dostoiévski')
+    const author = screen.getByRole('heading', {
+      name: 'Fiódor Dostoiévski',
+    })
     expect(author).toBeInTheDocument()
+
+    const cover = screen.getByRole('img', {
+      name: 'Duas Narrativas Fantásticas',
+    })
+    expect(cover).toBeInTheDocument()
+
+    const tagRating = screen.getByRole('img', {
+      name: '4.3 Stars',
+    })
+    expect(tagRating).toBeInTheDocument()
+
+    const goodReadsRating = screen.getByRole('heading', {
+      name: 'Avaliação não disponível na api GoodReads',
+    })
+    expect(goodReadsRating).toBeInTheDocument()
   })
 
-  it('check the ratings component', () => {
+  it('check the render of rating component', () => {
     render(
       <MemoryRouter>
-        <Card
-          book={{ ...mockBook, goodReads: { average_rating: '3.9' } }}
-          to="/detail/9788573262711"
-        />
+        <Detail book={{ ...mockBook, goodReads: { average_rating: '3.9' } }} />
       </MemoryRouter>,
     )
 

@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Card = ({ book, to }) => {
+const Card = ({ book, to, loading }) => {
+  if (loading) {
+    return <div role="progressbar" aria-label="card loading" />
+  }
+
   return (
     <a href={to}>
       <h4>{book.name}</h4>
@@ -9,6 +13,10 @@ const Card = ({ book, to }) => {
       <img src={book.cover.url} alt={book.name} />
     </a>
   )
+}
+
+Card.defaultProps = {
+  loading: false,
 }
 
 Card.propTypes = {
@@ -20,6 +28,7 @@ Card.propTypes = {
     }),
   }).isRequired,
   to: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
 }
 
 export default Card

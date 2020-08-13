@@ -1,7 +1,7 @@
 import React from 'react'
 import { screen, render } from '@testing-library/react'
 import useSWR from 'swr'
-import BookList from '../List'
+import SearchResult from '../SearchResult'
 
 const mockBooks = [
   {
@@ -58,7 +58,7 @@ describe('when component is mounted', () => {
       error: null,
     }))
 
-    render(<BookList title="Book Title" />)
+    render(<SearchResult term="12345" />)
 
     const links = await screen.findAllByRole('link')
     expect(links.length).toBe(2)
@@ -71,7 +71,7 @@ describe('when component is mounted', () => {
       error: null,
     }))
 
-    render(<BookList title="Book Title" />)
+    render(<SearchResult term="12345" />)
 
     const loaders = await screen.findAllByRole('progressbar')
     expect(loaders.length).toBe(12)
@@ -84,8 +84,8 @@ describe('when component is mounted', () => {
       error: { message: 'Network communication error' },
     }))
 
-    render(<BookList title="Book Title" />)
+    render(<SearchResult term="12345" />)
 
-    expect(screen.getByText('Network communication error')).toBeInTheDocument()
+    expect(screen.getByText(/Nenhum resultado encontrado/)).toBeInTheDocument()
   })
 })

@@ -21,7 +21,7 @@ List.propTypes = {
   title: PropTypes.string.isRequired,
   books: PropTypes.arrayOf(
     PropTypes.shape({
-      objectId: PropTypes.string,
+      objectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       name: PropTypes.string,
       author: PropTypes.string,
       cover: PropTypes.shape({
