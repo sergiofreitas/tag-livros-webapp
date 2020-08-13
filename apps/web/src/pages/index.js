@@ -5,7 +5,7 @@ import BookList from 'books/containers/List'
 
 const IndexPage = () => (
   <>
-    <Header title="Tag Livros - Comparador" />
+    <Header title="Tag Livros Web App" />
     <Search />
     <BookList title="Últimas edições" />
   </>

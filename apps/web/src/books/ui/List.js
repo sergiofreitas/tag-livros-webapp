@@ -49,6 +49,7 @@ BookList.propTypes = {
 const styles = theme => ({
   container: {
     marginTop: theme.spacing(6),
+    marginBottom: theme.spacing(4),
   },
   title: {
     marginBottom: theme.spacing(2),

@@ -8,6 +8,7 @@ import AppError from 'ui/AppError'
 const IndexPage = React.lazy(() => import('pages/index'))
 const DetailPage = React.lazy(() => import('pages/Detail'))
 const NotFound = React.lazy(() => import('pages/NotFound'))
+const SerchPage = React.lazy(() => import('pages/Search'))
 
 const App = () => (
   <AppError>
@@ -15,7 +16,8 @@ const App = () => (
       <Providers>
         <Switch>
           <Route exact path="/" component={IndexPage} />
-          <Route path="/detail/:id" component={DetailPage} />
+          <Route path="/detail/:isbn" component={DetailPage} />
+          <Route path="/search" component={SerchPage} />
           <Route component={NotFound} />
         </Switch>
       </Providers>
