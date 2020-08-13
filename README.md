@@ -6,6 +6,9 @@ Este é um projeto de teste de avaliação técnica.
 
 Este projeto foi produzido para avaliar habilidades técnicas, como organização de código e de testes unitários, coverage de testes e solução visual para o problema apresentado.
 
+O preview do projeto pode ser acessado em [https://tag-livros-webapp-test.netlify.app/](https://tag-livros-webapp-test.netlify.app/)
+
+
 ## Instalação
 
 Este comando irá instalar todas as dependencias tanto do front-end como do back-end.
